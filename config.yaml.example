@@ -4,8 +4,6 @@ app:
   debug: false
   # Path to log file, if any.
   log:
-  # URI to redirect to for unfulfilled requests.
-  redirect: 'https://example.edu/'
 
 # Template settings.
 template:
@@ -13,6 +11,12 @@ template:
   path:
   # Filename of template that defines a page. Default: page.html.twig
   page:
+  # Name of the site for the template
+  site: Room & Equipment Schedule
+  # Menu for the site in the template
+  menu:
+    - text: "Change Calendars"
+      href: "/schedule/change"
 
 # Database settings.
 db:
