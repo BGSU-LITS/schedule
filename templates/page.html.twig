@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{{
+    helper.metas()
+    .add({charset: 'utf-8'})
+    .addName('viewport', 'width=device-width,initial-scale=1,shrink-to-fit=no')
+    .addHttp('x-ua-Compatible', 'ie=edge')
+    |raw
+}}
+{{ helper.title(title)|raw }}
+{% block styles %}
+{% endblock %}
+</head>
+<body>
+{% block content %}
+<h1>{{ title }}</h1>
+{% for message in messages %}
+<div class="alert alert-{{message.level}}">{{message.message}}</div>
+{% endfor %}
+{% endblock %}
+{% block scripts %}
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,255 @@
+{% extends [settings.template.page, 'page.html.twig'] %}
+
+{% block content %}
+{{ parent() }}
+
+<h2>Schedule for {{ date | date('l, F j, Y') }}</h2>
+<div id="overflow">
+<table id="times">
+    <thead>
+        <tr>
+            <th>Time</th>
+            {% for calendar in calendars %}
+            <th class="room">
+                <span>
+                    {% if calendar.link %}
+                        <a href="{{ calendar.link }}">
+                            {{ calendar.title }}
+                        </a>
+                    {% else %}
+                        {{ calendar.title }}
+                    {% endif %}
+                </span>
+            </th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for hour in 0..23 %}
+        {% for half in [0, 30] %}
+        <tr id="time{{ "%02d%02d"|format(hour, half) }}">
+            {% if half == 0 %}
+            <th rowspan="2">{{ hour % 12 == 0 ? 12 : hour % 12 }}:00 {{ hour < 12 ? 'AM' : 'PM'}}</th>
+            {% endif %}
+
+            {% for calendar in calendars %}
+            <td{% if blocks[calendar.id]["%02d:%02d"|format(hour, half)] %} class="blocked"{% endif %}>
+                {% for event in blocks[calendar.id]["%02d:%02d"|format(hour, half)] %}
+                <div class="summary">
+                    {% if staff %}
+                        {{ event.summary }}
+                    {% endif %}
+                </div>
+                {% endfor %}
+                <div class="events">
+                    {% for event in blocks[calendar.id]["%02d:%02d"|format(hour, half)] %}
+                    <div>
+                        {% if staff %}
+                            <strong>{{ event.summary }}</strong><br>
+                        {% endif %}
+                        <em>{{ event.dtspan }}</em>
+                        {% if staff %}
+                            <br>{{ event.description|nl2br }}
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+
+<nav class="pagination" aria-label="date navigation">
+    <div>
+        <a class="pagination-previous" href="?{{ {cals: cals|join(' '), date: date|date_modify('-1 day')|date('Y-m-d'), mode: mode}|url_encode|replace({"%20": "+"}) }}">
+            Previous
+        </a>
+        <a href="?{{ {cals: cals|join(' '), date: 'today', mode: mode}|url_encode|replace({"%20": "+"}) }}">
+            Today
+        </a>
+        <a class="pagination-next" href="?{{ {cals: cals|join(' '), date: date|date_modify('+1 day')|date('Y-m-d'), mode: mode}|url_encode|replace({"%20": "+"}) }}">
+            Next
+        </a>
+    </div>
+    {% if staff %}
+    <div>
+        <a href="?{{ {cals: cals|join(' '), date: date|date('Y-m-d'), mode: mode == 'full' ? 'slim' : 'full'}|url_encode|replace({"%20": "+"}) }}">
+            Switch to
+            {{ mode == 'full' ? 'slim' : 'full' }}
+            mode
+        </a>
+    </div>
+    {% endif %}
+</nav>
+{% endblock %}
+
+{% block styles %}
+{{ parent() }}
+<style>
+#overflow {
+    margin-bottom: 4px;
+    overflow-x: auto;
+    max-width: 100%;
+}
+
+#times {
+    line-height: 1.25;
+    min-width: {{ (calendars|length * 120) + 140 }}px;
+    table-layout: fixed;
+    width: 100%;
+}
+
+#times th,
+#times td {
+    padding: 4px;
+    width: 120px;
+}
+
+#times th {
+    text-align: center;
+    vertical-align: bottom;
+}
+
+#times td {
+    border: 1px solid #ccc;
+    font-size: .875em;
+    height: 75px;
+    text-align: left;
+    vertical-align: top;
+}
+
+#times thead,
+#times tbody {
+    display: block;
+}
+
+#times thead,
+#times thead th {
+    border-left: 1px solid #fff;
+}
+
+#times tbody {
+    border: 1px solid #e8e8e8;
+    height: 610px;
+    overflow-y: scroll;
+    padding-bottom: 457px;
+}
+
+#times tbody th {
+    border: 1px solid #ccc;
+    font-weight: normal;
+    vertical-align: top;
+}
+
+#times td.blocked {
+    background: #f2f2f2;
+}
+
+#times td.blocked:hover {
+    background: #f9f6b8;
+    position: relative;
+}
+
+#times td.blocked > .summary {
+    max-width: 110px;
+    overflow: hidden;
+}
+
+#times td.blocked > .events {
+    display: none;
+}
+
+#times td.blocked > .summary + .summary,
+#times td.blocked > .events > div + div {
+    border-top: 1px dotted #ccc;
+    margin-top: 4px;
+    padding-top: 4px;
+}
+
+#times td.blocked:hover > .events {
+    background: #eee;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.6);
+    display: block;
+    left: 116px;
+    padding: 4px;
+    position: absolute;
+    top: 4px;
+    min-width: 134px;
+}
+
+{% if mode != 'full' %}
+#times {
+    min-width: {{ (calendars|length * 32) + 140 }}px;
+}
+
+#times th.room,
+#times td {
+    width: 32px;
+}
+
+#times th.room span {
+    transform: rotate(180deg);
+    white-space: nowrap;
+    writing-mode: vertical-rl;
+}
+
+#times td {
+    height: 20px;
+}
+
+#times td.blocked {
+    background: #595959;
+}
+
+#times td.blocked > .summary {
+    display: none;
+}
+
+#times td.blocked:hover > .events {
+    left: 28px;
+}
+
+#times tbody {
+    height: 365px;
+    padding-bottom: 322px;
+}
+{% endif %}
+</style>
+{% endblock %}
+
+{% block scripts %}
+{{ parent() }}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('time0800').scrollIntoView();
+
+    {% if date|date('Y-m-d') == 'now'|date('Y-m-d') %}
+    var changeTimeId;
+    var changeTimeDate = new Date('{{ date|date('Y-m-d 00:00:00') }}');
+
+    function changeTime() {
+        var date = new Date;
+        var id = 'time' + ('0' + date.getHours()).slice(-2) +
+            (date.getMinutes() < 30 ? '00' : '30');
+
+        if (date.getDate() !== changeTimeDate.getDate()) {
+            location.reload(true);
+        }
+
+        if (id !== changeTimeId) {
+            changeTimeId = id;
+            document.getElementById(id).scrollIntoView();
+        }
+
+        setTimeout(changeTime, 60 * 1000);
+    }
+
+    changeTime();
+    {% endif %}
+});
+</script>
+{% endblock %}

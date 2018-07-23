@@ -1,0 +1,53 @@
+{% set title = "Change Calendars" %}
+{% extends [settings.template.page, 'page.html.twig'] %}
+
+{% block content %}
+{{ parent() }}
+
+<form method="get" action="{{ path_for('index') }}">
+    <table>
+        <thead>
+            <tr>
+                <th>Room or Equipment</th>
+                <th class="text-right">Location</th>
+                <th>Request</th>
+                <th>ICS</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for calendar in calendars %}
+            <tr>
+                <td>
+                    {{
+                        helper.input({
+                            type: 'checkbox',
+                            name: 'cals[]',
+                            value: calendar.preset and calendar.id,
+                            attribs: {
+                                'label': calendar.title,
+                                'value': calendar.id,
+                            }
+                        })
+                        |raw
+                    }}
+                </td>
+                <td class="text-right">{{ calendar.location }}</td>
+                <td>
+                    {% if calendar.link %}
+                    <a href="{{ calendar.link }}" title="Request {{ calendar.title }}">Request</a>
+                    {% endif %}
+                </td>
+                <td><a href="{{ calendar.ical }}" title="ICS for {{ calendar.title }}">ICS</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <button type="submit" class="btn btn-primary">View Schedule</button>
+</form>
+
+{% endblock %}
+
+{% block styles %}
+{{ parent() }}
+
+{% endblock %}

@@ -1,0 +1,32 @@
+# Application settings.
+app:
+  # Whether to enable debug information.
+  debug: false
+  # Path to log file, if any.
+  log:
+  # URI to redirect to for unfulfilled requests.
+  redirect: 'https://example.edu/'
+
+# Template settings.
+template:
+  # Path to search for templates before this package's templates.
+  path:
+  # Filename of template that defines a page. Default: page.html.twig
+  page:
+
+# Database settings.
+db:
+  # Database PDO connection DSN.
+  # See http://php.net/manual/en/pdo.connections.php
+  dsn: 'mysql:dbname=schedule'
+  # Database PDO connection username.
+  username: 'schedule'
+  # Database PDO connection password.
+  password: 'schedule'
+  # Database PDO driver name as connection type.
+  # See http://php.net/manual/en/pdo.drivers.php
+  type: 'mysql'
+  # Database name.
+  name: 'schedule'
+  # Database table prefix.
+  prefix: 'schedule_'
