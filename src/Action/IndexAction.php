@@ -82,12 +82,14 @@ class IndexAction extends AbstractAction
 
         if (!empty($args['cals'])) {
             if (is_array($args['cals'])) {
+                sort($args['cals']);
+
                 return $res->withStatus(302)->withHeader(
                     'Location',
                     $req->getUri()->withQuery(http_build_query([
                         'cals' => implode(' ', $args['cals']),
-                        'date' => $args['date'],
-                        'mode' => $args['mode']
+                        'mode' => $args['mode'],
+                        'date' => $args['date']
                     ]))
                 );
             }

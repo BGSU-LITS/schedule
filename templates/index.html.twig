@@ -65,25 +65,46 @@
 
 <nav class="nav-page" aria-label="date navigation">
     <div>
-        <a class="nav-page-previous" href="?{{ {cals: cals|join(' '), date: date|date_modify('-1 
-day')|date('Y-m-d'), mode: mode}|url_encode|replace({"%20": "+"}) }}">
-            Previous
-        </a>
-        <a href="?{{ {cals: cals|join(' '), date: 'today', mode: mode}|url_encode|replace({"%20": "+"}) }}">
-            Today
-        </a>
-        <a class="nav-page-next" href="?{{ {cals: cals|join(' '), date: date|date_modify('+1 
-day')|date('Y-m-d'), mode: mode}|url_encode|replace({"%20": "+"}) }}">
-            Next
-        </a>
+        <a class="nav-page-previous" href="?{{
+            {
+                cals: cals|join(' '),
+                mode: mode,
+                date: date|date_modify('-1 day')|date('Y-m-d')
+            }
+            |url_encode()
+            |replace({"%20": "+"})
+        }}">Previous</a>
+        <a href="?{{
+            {
+                cals: cals|join(' '),
+                mode: mode,
+                date: 'today'
+            }
+            |url_encode
+            |replace({"%20": "+"})
+        }}">Today</a>
+        <a class="nav-page-next" href="?{{
+            {
+                cals: cals|join(' '),
+                mode: mode,
+                date: date|date_modify('+1 day')|date('Y-m-d')
+            }
+            |url_encode()
+            |replace({"%20": "+"})
+        }}">Next</a>
+        <a><button id="date">Jump to Date</button></a>
     </div>
     {% if staff %}
     <div>
-        <a href="?{{ {cals: cals|join(' '), date: date|date('Y-m-d'), mode: mode == 'full' ? 'slim' : 'full'}|url_encode|replace({"%20": "+"}) }}">
-            Switch to
-            {{ mode == 'full' ? 'slim' : 'full' }}
-            mode
-        </a>
+        <a href="?{{
+            {
+                cals: cals|join(' '),
+                mode: mode == 'full' ? 'slim' : 'full',
+                date: date|date('Y-m-d')
+            }
+            |url_encode
+            |replace({"%20": "+"})
+        }}">Switch to {{ mode == 'full' ? 'slim' : 'full' }} mode</a>
     </div>
     {% endif %}
 </nav>
@@ -225,7 +246,22 @@ day')|date('Y-m-d'), mode: mode}|url_encode|replace({"%20": "+"}) }}">
 
 {% block scripts %}
 {{ parent() }}
+<script src="https://lib.bgsu.edu/template/flatpickr.js"></script>
 <script>
+flatpickr.setup('#date', {
+    onChange: function(selectedDates, dateStr, instance) {
+        document.location.search = '?{{
+            {
+                cals: cals|join(' '),
+                mode: mode
+            }
+            |url_encode()
+            |replace({"%20": "+"})
+            |raw
+        }}&date=' + dateStr;
+    }
+});
+
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('time0800').scrollIntoView();
 
