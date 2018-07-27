@@ -1,0 +1,45 @@
+<nav class="nav-page" aria-label="date navigation">
+    <div>
+        <a class="nav-page-previous" href="?{{
+            {
+                cals: cals|join(' '),
+                mode: mode,
+                date: date|date_modify('-1 day')|date('Y-m-d')
+            }
+            |url_encode()
+            |replace({"%20": "+"})
+        }}">Previous</a>
+        <a href="?{{
+            {
+                cals: cals|join(' '),
+                mode: mode,
+                date: 'today'
+            }
+            |url_encode
+            |replace({"%20": "+"})
+        }}">Today</a>
+        <a class="nav-page-next" href="?{{
+            {
+                cals: cals|join(' '),
+                mode: mode,
+                date: date|date_modify('+1 day')|date('Y-m-d')
+            }
+            |url_encode()
+            |replace({"%20": "+"})
+        }}">Next</a>
+        <a><button class="jump">Jump to Date</button></a>
+    </div>
+    {% if staff %}
+    <div>
+        <a href="?{{
+            {
+                cals: cals|join(' '),
+                mode: mode == 'full' ? 'slim' : 'full',
+                date: date|date('Y-m-d')
+            }
+            |url_encode
+            |replace({"%20": "+"})
+        }}">Switch to {{ mode == 'full' ? 'slim' : 'full' }} mode</a>
+    </div>
+    {% endif %}
+</nav>
