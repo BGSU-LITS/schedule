@@ -97,7 +97,13 @@ class UpdateAction
         // Loop through each calendar.
         foreach ($calendars as $id => $ical) {
             // Download and parse the calendar from the ICal URL.
-            $vcalendar = $this->vobject->parse(fopen($ical, 'r'));
+            $contents = $this->getContents($ical);
+
+            if ($contents === false) {
+                continue;
+            }
+
+            $vcalendar = $this->vobject->parse($contents);
 
             // Expand recurring events within the timerange to load.
             $vcalendar = $vcalendar->expand($start, $end, $timezone);
@@ -151,6 +157,8 @@ class UpdateAction
             }
 
             $this->pdo->commit();
+
+            sleep(10);
         }
 
         return $res;
@@ -190,5 +198,24 @@ class UpdateAction
         }
 
         return $event;
+    }
+
+    /**
+     * Get contents of a URL preventing any warning from being issued.
+     *
+     * @param string $url The URL to retrieve.
+     * @return string|bool The contents of the URL or false on error.
+     */
+    private function getContents($url)
+    {
+        set_error_handler(function () {
+            // Do nothing.
+        });
+
+        $contents = file_get_contents($url);
+
+        restore_error_handler();
+
+        return $contents;
     }
 }
