@@ -4,7 +4,7 @@
 {% block content %}
 {{ parent() }}
 
-<h2>Schedule for {{ date|date('l, F j, Y')|replace({' ': '&nbsp;'})|raw }}</h2>
+<h2>Schedule for {{ date|date('D, M j, Y')|replace({' ': '&nbsp;'})|raw }}</h2>
 {% include 'includes/nav-page.html.twig' %}
 
 <div id="overflow">
@@ -15,12 +15,19 @@
             {% for calendar in calendars %}
             <th class="room">
                 <span>
-                    {% if calendar.link %}
-                        <a href="{{ calendar.link }}">
+                    <strong>
+                        {% if calendar.link %}
+                            <a href="{{ calendar.link }}" target="_top">
+                                {{ calendar.title }}
+                            </a>
+                        {% else %}
                             {{ calendar.title }}
-                        </a>
-                    {% else %}
-                        {{ calendar.title }}
+                        {% endif %}
+                    </strong>
+                    {% if calendar.info %}
+                        <br><span style="font-size:.9em">
+                            {{ calendar.info|replace({'-': '&#8209;'})|raw }}
+                        </span>
                     {% endif %}
                 </span>
             </th>
@@ -67,6 +74,7 @@
 </div>
 
 {% include 'includes/nav-page.html.twig' %}
+<p>Schedule refreshes every five minutes.</p>
 {% endblock %}
 
 {% block styles %}
@@ -92,6 +100,7 @@
 }
 
 #times th {
+    font-weight: normal;
     text-align: center;
     vertical-align: bottom;
 }
@@ -123,7 +132,6 @@
 
 #times tbody th {
     border: 1px solid #ccc;
-    font-weight: normal;
     vertical-align: top;
 }
 
@@ -165,12 +173,18 @@
 
 {% if mode != 'full' %}
 #times {
-    min-width: {{ (calendars|length * 32) + 140 }}px;
+    min-width: {{ (calendars|length * 35) + 140 }}px;
+}
+
+#times th {
+    width: 80px;
 }
 
 #times th.room,
 #times td {
-    width: 32px;
+    padding: 0;
+    text-align: left;
+    width: 35px;
 }
 
 #times th.room span {
@@ -192,7 +206,7 @@
 }
 
 #times td.blocked:hover > .events {
-    left: 28px;
+    left: 32px;
 }
 
 #times tbody {
@@ -205,48 +219,40 @@
 
 {% block scripts %}
 {{ parent() }}
-<script src="https://lib.bgsu.edu/template/flatpickr.js"></script>
+<script src="https://lib.bgsu.edu/template/1.0.0/flatpickr.js"></script>
 <script>
-flatpickr.setup('.jump', {
-    onChange: function(selectedDates, dateStr, instance) {
-        document.location.search = '?{{
-            {
-                cals: cals|join(' '),
-                mode: mode
-            }
-            |url_encode()
-            |replace({"%20": "+"})
-            |raw
-        }}&date=' + dateStr;
-    }
-});
-
 document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('time0800').scrollIntoView();
+    bgsu_flatpickr.setup('.jump', {
+        onChange: function(selectedDates, dateStr, instance) {
+            document.location.search = '?{{
+                {
+                    cals: cals|join(' '),
+                    mode: mode
+                }
+                |url_encode()
+                |replace({"%20": "+"})
+                |raw
+            }}&date=' + dateStr;
+        }
+    });
 
     {% if date|date('Y-m-d') == 'now'|date('Y-m-d') %}
-    var changeTimeId;
-    var changeTimeDate = new Date('{{ date|date('Y-m-d 00:00:00') }}');
-
-    function changeTime() {
-        var date = new Date;
-        var id = 'time' + ('0' + date.getHours()).slice(-2) +
-            (date.getMinutes() < 30 ? '00' : '30');
-
-        if (date.getDate() !== changeTimeDate.getDate()) {
-            location.reload(true);
-        }
-
-        if (id !== changeTimeId) {
-            changeTimeId = id;
-            document.getElementById(id).scrollIntoView();
-        }
-
-        setTimeout(changeTime, 60 * 1000);
-    }
-
-    changeTime();
+    var date = new Date(); 
+    var time = document.getElementById(
+        'time' + ('0' + date.getHours()).slice(-2) +
+        (date.getMinutes() < 30 ? '00' : '30')
+    );
+    {% else %}
+    var time = document.getElementById('time0800');
     {% endif %}
+
+    var body = document.querySelector('#times tbody');
+    
+    body.scrollTop = time.offsetTop - body.offsetTop - 1;
+
+    setTimeout(function() {
+        location.reload(true)
+    }, 5 * 60 * 1000);
 });
 </script>
 {% endblock %}

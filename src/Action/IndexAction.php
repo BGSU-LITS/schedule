@@ -114,7 +114,15 @@ class IndexAction extends AbstractAction
     {
         // Select a list of all calendars from the database.
         $select = $this->query->newSelect()
-            ->cols(['id', 'title', 'location', 'ical', 'link', 'preset'])
+            ->cols([
+                'id',
+                'title',
+                'location',
+                'ical',
+                'link',
+                'info',
+                'preset'
+            ])
             ->from($this->prefix . 'calendars')
             ->orderBy(['sort']);
 
