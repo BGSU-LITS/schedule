@@ -1,10 +1,11 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "90e3e3e20d562a4390ba4b4c2d194ca3",
+    "hash": "bac80c782d4fe27d18ff9c1bc4fc4971",
+    "content-hash": "30c4785814cb91cefda690926a4ac2c1",
     "packages": [
         {
             "name": "aura/html",
@@ -65,7 +66,7 @@
                 "html",
                 "input"
             ],
-            "time": "2017-07-21T06:56:56+00:00"
+            "time": "2017-07-21 06:56:56"
         },
         {
             "name": "aura/sql",
@@ -118,7 +119,7 @@
                 "sqlserver",
                 "sqlsrv"
             ],
-            "time": "2018-06-11T12:57:42+00:00"
+            "time": "2018-06-11 12:57:42"
         },
         {
             "name": "aura/sqlquery",
@@ -182,7 +183,7 @@
                 "sqlserver",
                 "update"
             ],
-            "time": "2016-10-03T20:34:56+00:00"
+            "time": "2016-10-03 20:34:56"
         },
         {
             "name": "cakephp/cache",
@@ -225,7 +226,7 @@
                 "caching",
                 "cakephp"
             ],
-            "time": "2019-02-05T13:29:41+00:00"
+            "time": "2019-02-05 13:29:41"
         },
         {
             "name": "cakephp/collection",
@@ -271,7 +272,7 @@
                 "collections",
                 "iterators"
             ],
-            "time": "2019-01-08T15:11:44+00:00"
+            "time": "2019-01-08 15:11:44"
         },
         {
             "name": "cakephp/core",
@@ -321,7 +322,7 @@
                 "core",
                 "framework"
             ],
-            "time": "2019-02-09T07:54:49+00:00"
+            "time": "2019-02-09 07:54:49"
         },
         {
             "name": "cakephp/database",
@@ -369,7 +370,7 @@
                 "database abstraction",
                 "pdo"
             ],
-            "time": "2019-02-07T17:08:39+00:00"
+            "time": "2019-02-07 17:08:39"
         },
         {
             "name": "cakephp/datasource",
@@ -419,7 +420,7 @@
                 "entity",
                 "query"
             ],
-            "time": "2018-12-13T23:20:56+00:00"
+            "time": "2018-12-13 23:20:56"
         },
         {
             "name": "cakephp/log",
@@ -464,7 +465,7 @@
                 "log",
                 "logging"
             ],
-            "time": "2019-02-05T13:29:41+00:00"
+            "time": "2019-02-05 13:29:41"
         },
         {
             "name": "cakephp/utility",
@@ -517,7 +518,7 @@
                 "string",
                 "utility"
             ],
-            "time": "2018-09-14T01:26:50+00:00"
+            "time": "2018-09-14 01:26:50"
         },
         {
             "name": "container-interop/container-interop",
@@ -548,7 +549,7 @@
             ],
             "description": "Promoting the interoperability of container objects (DIC, SL, etc.)",
             "homepage": "https://github.com/container-interop/container-interop",
-            "time": "2017-02-14T19:40:03+00:00"
+            "time": "2017-02-14 19:40:03"
         },
         {
             "name": "data-uri/data-uri",
@@ -600,7 +601,7 @@
                 "data-uri",
                 "uri"
             ],
-            "time": "2018-02-27T11:01:59+00:00"
+            "time": "2018-02-27 11:01:59"
         },
         {
             "name": "data-uri/twig-extension",
@@ -644,7 +645,7 @@
                 "dataURL",
                 "twig extension"
             ],
-            "time": "2016-05-11T18:07:40+00:00"
+            "time": "2016-05-11 18:07:40"
         },
         {
             "name": "monolog/monolog",
@@ -722,7 +723,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2018-11-05T09:00:11+00:00"
+            "time": "2018-11-05 09:00:11"
         },
         {
             "name": "nikic/fast-route",
@@ -768,7 +769,7 @@
                 "router",
                 "routing"
             ],
-            "time": "2018-02-13T20:26:39+00:00"
+            "time": "2018-02-13 20:26:39"
         },
         {
             "name": "paragonie/random_compat",
@@ -813,7 +814,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2018-07-02T15:55:56+00:00"
+            "time": "2018-07-02 15:55:56"
         },
         {
             "name": "pimple/pimple",
@@ -863,7 +864,7 @@
                 "container",
                 "dependency injection"
             ],
-            "time": "2018-01-21T07:42:36+00:00"
+            "time": "2018-01-21 07:42:36"
         },
         {
             "name": "psr/container",
@@ -912,7 +913,7 @@
                 "container-interop",
                 "psr"
             ],
-            "time": "2017-02-14T16:28:37+00:00"
+            "time": "2017-02-14 16:28:37"
         },
         {
             "name": "psr/http-message",
@@ -962,7 +963,7 @@
                 "request",
                 "response"
             ],
-            "time": "2016-08-06T14:39:51+00:00"
+            "time": "2016-08-06 14:39:51"
         },
         {
             "name": "psr/log",
@@ -1009,7 +1010,7 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2018-11-20T15:27:04+00:00"
+            "time": "2018-11-20 15:27:04"
         },
         {
             "name": "robmorgan/phinx",
@@ -1083,7 +1084,7 @@
                 "migrations",
                 "phinx"
             ],
-            "time": "2018-08-12T17:22:43+00:00"
+            "time": "2018-08-12 17:22:43"
         },
         {
             "name": "sabre/uri",
@@ -1134,20 +1135,20 @@
                 "uri",
                 "url"
             ],
-            "time": "2017-02-20T20:02:35+00:00"
+            "time": "2017-02-20 20:02:35"
         },
         {
             "name": "sabre/vobject",
-            "version": "4.1.6",
+            "version": "4.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sabre-io/vobject.git",
-                "reference": "122cacbdea2c6133ac04db86ec05854beef75adf"
+                "reference": "bd500019764e434ff65872d426f523e7882a0739"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sabre-io/vobject/zipball/122cacbdea2c6133ac04db86ec05854beef75adf",
-                "reference": "122cacbdea2c6133ac04db86ec05854beef75adf",
+                "url": "https://api.github.com/repos/sabre-io/vobject/zipball/bd500019764e434ff65872d426f523e7882a0739",
+                "reference": "bd500019764e434ff65872d426f523e7882a0739",
                 "shasum": ""
             },
             "require": {
@@ -1156,8 +1157,7 @@
                 "sabre/xml": ">=1.5 <3.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "> 4.8.35, <6.0.0",
-                "sabre/cs": "^1.0.0"
+                "phpunit/phpunit": "> 4.8.35, <6.0.0"
             },
             "suggest": {
                 "hoa/bench": "If you would like to run the benchmark scripts"
@@ -1231,7 +1231,7 @@
                 "xCal",
                 "xCard"
             ],
-            "time": "2018-04-20T07:22:50+00:00"
+            "time": "2019-02-19 13:05:37"
         },
         {
             "name": "sabre/xml",
@@ -1293,7 +1293,7 @@
                 "dom",
                 "xml"
             ],
-            "time": "2019-01-09T13:50:52+00:00"
+            "time": "2019-01-09 13:50:52"
         },
         {
             "name": "slim/csrf",
@@ -1343,7 +1343,7 @@
                 "middleware",
                 "slim"
             ],
-            "time": "2018-08-22T16:12:18+00:00"
+            "time": "2018-08-22 16:12:18"
         },
         {
             "name": "slim/flash",
@@ -1391,7 +1391,7 @@
                 "provider",
                 "slim"
             ],
-            "time": "2017-10-22T10:35:05+00:00"
+            "time": "2017-10-22 10:35:05"
         },
         {
             "name": "slim/slim",
@@ -1462,7 +1462,7 @@
                 "micro",
                 "router"
             ],
-            "time": "2019-01-15T13:21:25+00:00"
+            "time": "2019-01-15 13:21:25"
         },
         {
             "name": "slim/twig-view",
@@ -1513,20 +1513,20 @@
                 "twig",
                 "view"
             ],
-            "time": "2018-05-07T10:54:29+00:00"
+            "time": "2018-05-07 10:54:29"
         },
         {
             "name": "symfony/config",
-            "version": "v4.2.3",
+            "version": "v4.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
-                "reference": "25a2e7abe0d97e70282537292e3df45cf6da7b98"
+                "reference": "7f70d79c7a24a94f8e98abb988049403a53d7b31"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/config/zipball/25a2e7abe0d97e70282537292e3df45cf6da7b98",
-                "reference": "25a2e7abe0d97e70282537292e3df45cf6da7b98",
+                "url": "https://api.github.com/repos/symfony/config/zipball/7f70d79c7a24a94f8e98abb988049403a53d7b31",
+                "reference": "7f70d79c7a24a94f8e98abb988049403a53d7b31",
                 "shasum": ""
             },
             "require": {
@@ -1576,20 +1576,20 @@
             ],
             "description": "Symfony Config Component",
             "homepage": "https://symfony.com",
-            "time": "2019-01-30T11:44:30+00:00"
+            "time": "2019-02-23 15:17:42"
         },
         {
             "name": "symfony/console",
-            "version": "v4.2.3",
+            "version": "v4.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "1f0ad51dfde4da8a6070f06adc58b4e37cbb37a4"
+                "reference": "9dc2299a016497f9ee620be94524e6c0af0280a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/1f0ad51dfde4da8a6070f06adc58b4e37cbb37a4",
-                "reference": "1f0ad51dfde4da8a6070f06adc58b4e37cbb37a4",
+                "url": "https://api.github.com/repos/symfony/console/zipball/9dc2299a016497f9ee620be94524e6c0af0280a9",
+                "reference": "9dc2299a016497f9ee620be94524e6c0af0280a9",
                 "shasum": ""
             },
             "require": {
@@ -1648,7 +1648,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2019-01-25T14:35:16+00:00"
+            "time": "2019-02-23 15:17:42"
         },
         {
             "name": "symfony/contracts",
@@ -1716,20 +1716,20 @@
                 "interoperability",
                 "standards"
             ],
-            "time": "2018-12-05T08:06:11+00:00"
+            "time": "2018-12-05 08:06:11"
         },
         {
             "name": "symfony/filesystem",
-            "version": "v4.2.3",
+            "version": "v4.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "7c16ebc2629827d4ec915a52ac809768d060a4ee"
+                "reference": "e16b9e471703b2c60b95f14d31c1239f68f11601"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/7c16ebc2629827d4ec915a52ac809768d060a4ee",
-                "reference": "7c16ebc2629827d4ec915a52ac809768d060a4ee",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/e16b9e471703b2c60b95f14d31c1239f68f11601",
+                "reference": "e16b9e471703b2c60b95f14d31c1239f68f11601",
                 "shasum": ""
             },
             "require": {
@@ -1766,20 +1766,20 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2019-01-16T20:35:37+00:00"
+            "time": "2019-02-07 11:40:08"
         },
         {
             "name": "symfony/http-foundation",
-            "version": "v4.2.3",
+            "version": "v4.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-foundation.git",
-                "reference": "8d2318b73e0a1bc75baa699d00ebe2ae8b595a39"
+                "reference": "850a667d6254ccf6c61d853407b16f21c4579c77"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/8d2318b73e0a1bc75baa699d00ebe2ae8b595a39",
-                "reference": "8d2318b73e0a1bc75baa699d00ebe2ae8b595a39",
+                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/850a667d6254ccf6c61d853407b16f21c4579c77",
+                "reference": "850a667d6254ccf6c61d853407b16f21c4579c77",
                 "shasum": ""
             },
             "require": {
@@ -1820,7 +1820,7 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "https://symfony.com",
-            "time": "2019-01-29T09:49:29+00:00"
+            "time": "2019-02-26 08:03:39"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -1867,7 +1867,7 @@
                 },
                 {
                     "name": "Gert de Pagter",
-                    "email": "BackEndTea@gmail.com"
+                    "email": "backendtea@gmail.com"
                 }
             ],
             "description": "Symfony polyfill for ctype functions",
@@ -1878,7 +1878,7 @@
                 "polyfill",
                 "portable"
             ],
-            "time": "2018-08-06T14:22:27+00:00"
+            "time": "2018-08-06 14:22:27"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -1937,20 +1937,20 @@
                 "portable",
                 "shim"
             ],
-            "time": "2018-09-21T13:07:52+00:00"
+            "time": "2018-09-21 13:07:52"
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.4.22",
+            "version": "v3.4.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "ba11776e9e6c15ad5759a07bffb15899bac75c2d"
+                "reference": "57f1ce82c997f5a8701b89ef970e36bb657fd09c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/ba11776e9e6c15ad5759a07bffb15899bac75c2d",
-                "reference": "ba11776e9e6c15ad5759a07bffb15899bac75c2d",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/57f1ce82c997f5a8701b89ef970e36bb657fd09c",
+                "reference": "57f1ce82c997f5a8701b89ef970e36bb657fd09c",
                 "shasum": ""
             },
             "require": {
@@ -1996,7 +1996,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2019-01-16T10:59:17+00:00"
+            "time": "2019-02-23 15:06:07"
         },
         {
             "name": "twig/extensions",
@@ -2051,25 +2051,26 @@
                 "i18n",
                 "text"
             ],
-            "time": "2018-12-05T18:34:18+00:00"
+            "time": "2018-12-05 18:34:18"
         },
         {
             "name": "twig/twig",
-            "version": "v1.37.1",
+            "version": "v2.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "66be9366c76cbf23e82e7171d47cbfa54a057a62"
+                "reference": "7d7342c8a4059fefb9b8d07db0cc14007021f9b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/66be9366c76cbf23e82e7171d47cbfa54a057a62",
-                "reference": "66be9366c76cbf23e82e7171d47cbfa54a057a62",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/7d7342c8a4059fefb9b8d07db0cc14007021f9b7",
+                "reference": "7d7342c8a4059fefb9b8d07db0cc14007021f9b7",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.4.0",
-                "symfony/polyfill-ctype": "^1.8"
+                "php": "^7.0",
+                "symfony/polyfill-ctype": "^1.8",
+                "symfony/polyfill-mbstring": "^1.3"
             },
             "require-dev": {
                 "psr/container": "^1.0",
@@ -2079,7 +2080,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.37-dev"
+                    "dev-master": "2.6-dev"
                 }
             },
             "autoload": {
@@ -2117,7 +2118,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2019-01-14T14:59:29+00:00"
+            "time": "2019-01-14 15:00:48"
         }
     ],
     "packages-dev": [],
