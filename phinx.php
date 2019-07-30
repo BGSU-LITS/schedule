@@ -6,6 +6,9 @@
  * @license MIT
  */
 
+// Vendor autoloader.
+require_once __DIR__ . '/vendor/autoload.php';
+
 // Load settings from the application
 $settings = require __DIR__ . '/app/settings.php';
 
