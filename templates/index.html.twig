@@ -60,6 +60,8 @@
                         <em>{{ event.dtspan }}</em>
                         {% if staff %}
                             <br>{{ event.description|nl2br }}
+                        {% elseif calendar.person and event.person  %}
+                            <br>{{ event.person }}
                         {% endif %}
                     </div>
                     {% endfor %}
@@ -168,7 +170,7 @@
     padding: 4px;
     position: absolute;
     top: 4px;
-    min-width: 134px;
+    min-width: 140px;
 }
 
 {% if mode != 'full' %}
@@ -237,7 +239,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     {% if date|date('Y-m-d') == 'now'|date('Y-m-d') %}
-    var date = new Date(); 
+    var date = new Date();
     var time = document.getElementById(
         'time' + ('0' + date.getHours()).slice(-2) +
         (date.getMinutes() < 30 ? '00' : '30')
@@ -247,7 +249,7 @@ document.addEventListener('DOMContentLoaded', function() {
     {% endif %}
 
     var body = document.querySelector('#times tbody');
-    
+
     body.scrollTop = time.offsetTop - body.offsetTop - 1;
 
     setTimeout(function() {

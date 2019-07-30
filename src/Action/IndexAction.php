@@ -121,7 +121,8 @@ class IndexAction extends AbstractAction
                 'ical',
                 'link',
                 'info',
-                'preset'
+                'preset',
+                'person'
             ])
             ->from($this->prefix . 'calendars')
             ->orderBy(['sort']);
@@ -195,6 +196,14 @@ class IndexAction extends AbstractAction
             if ($dtstart->format('Y-m-d') === $dtend->format('Y-m-d')) {
                 $event['dtspan'] = $dtstart->format('g:i A') .
                     ' to ' . $dtend->format('g:i A');
+            }
+
+            $preg = '/^(booked: )?(.+)\s\(?[^@]+@[^@]+\)?$/';
+
+            if (preg_match($preg, $event['summary'], $matches)) {
+                if ($matches[2] !== 'Exchange Booking') {
+                    $event['person'] = $matches[2];
+                }
             }
 
             $time = $start;
