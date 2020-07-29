@@ -16,7 +16,10 @@ $settings = [
         'debug' => false,
 
         // Path to log file, if any.
-        'log' => false
+        'log' => false,
+
+        // Regular expression to match valid IP addresses.
+        'allow' => false,
     ],
 
     // Template settings.

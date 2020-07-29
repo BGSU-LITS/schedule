@@ -8,6 +8,7 @@
 
 use Slim\Container;
 use Slim\Csrf\Guard;
+use RKA\Middleware\IpAddress;
 use Psr\Log\LoggerInterface;
 use Slim\Flash\Messages;
 use App\Session;
@@ -29,6 +30,11 @@ $container[Guard::class] = function (Container $container) {
     });
 
     return $guard;
+};
+
+// Add IP Address middleware to the container.
+$container[IpAddress::class] = function (Container $container) {
+    return new IpAddress;
 };
 
 // Add a PSR-3 compatible logger to the container.
@@ -110,7 +116,7 @@ $container[Twig::class] = function (Container $container) {
     // Add Slim extension to the view.
     $view->addExtension(new \Slim\Views\TwigExtension(
         $container['router'],
-        $container['request']->getUri()
+        $container['request']->getUri()->withUserInfo('')
     ));
 
     return $view;

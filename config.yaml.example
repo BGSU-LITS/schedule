@@ -4,6 +4,8 @@ app:
   debug: false
   # Path to log file, if any.
   log:
+  # Regular expression to match valid IP addresses.
+  allow:
 
 # Template settings.
 template:
