@@ -1,0 +1,142 @@
+{% set iframe = mode == 'iframe' %}
+
+{% if not iframe %}
+    {% set title = 'Events' %}
+{% endif %}
+
+{% extends [settings.template.page, 'page.html.twig'] %}
+
+{% block content %}
+{{ parent() }}
+
+{% if not iframe %}
+<nav aria-label="breadcrumb">
+    <ol class="list-breadcrumb">
+        <li>
+            <a href="{{ path_for('index') }}">{{ settings.template.site }}</a>
+        </li><li aria-current="page">
+            {{ title }}
+        </li>
+    </ol>
+</nav>
+{% endif %}
+
+<h2>
+    {% if date == 'now' %}Current and Upcoming{% endif %}
+    Events for {{ date|date('D, M j, Y')|replace({' ': '&nbsp;'})|raw }}
+</h2>
+
+{% include 'includes/nav-page.html.twig' with {'now': true} %}
+
+{% if events %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Room</th>
+            <th>Floor</th>
+            <th>Start</th>
+            <th>End</th>
+            <th>Event</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for event in events %}
+        <tr>
+            <td>{{ calendars[event.calendar_id].title|split(' (', 2)[0] }}</td>
+            <td>{{ calendars[event.calendar_id].location }}</td>
+            <td>{{ event.dtstart|date('g:i A') }}</td>
+            <td>{{ event.dtend|date('g:i A') }}</td>
+            <td>{{ event.person ?: event.summary }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<div class="alert alert-failure">No events are scheduled.</div>
+{% endif %}
+
+{% include 'includes/nav-page.html.twig' with {'now': true} %}
+
+{% if iframe %}
+{% if calendars %}
+<p>Events refresh every five minutes.</p>
+<h2>Included Calendars</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Room</th>
+            <th>Floor</th>
+            <th>Contact</th>
+        </tr>
+    </thead>
+    <tbody>
+{% for calendar in calendars %}
+        <tr>
+            <td>
+                {% if calendar.link %}<a href="{{ calendar.link}}" target="_blank">{% endif %}
+                {{ calendar.title|split(' (', 2)[0] }}
+                {% if calendar.link %}</a>{% endif %}
+            </td>
+            <td>{{ calendar.location }}</td>
+            <td>{{ calendar.info }}</td>
+        </tr>
+{% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% else %}
+<p>Events refresh every five minutes.<br>
+    <a href="{{ path_for('events', { 'page': 'info' }) }}{% if iframe %}?mode=iframe{% endif %}">Information on included UL calendars and details.</a></p>
+{% endif %}
+{% endblock %}
+
+{% block styles %}
+{{ parent() }}
+<style>
+#content table {
+    width: 100%;
+}
+
+#content table td {
+    text-align: right;
+    white-space: nowrap;
+}
+
+#content table td:first-child {
+    text-align: left;
+}
+
+#content table td:last-child {
+    text-align: left;
+    white-space: normal;
+    width: 100%;
+}
+
+</style>
+{% endblock %}
+
+{% block scripts %}
+{{ parent() }}
+<script src="https://lib.bgsu.edu/template/1.0.0/flatpickr.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    bgsu_flatpickr.setup('.jump', {
+        onChange: function(selectedDates, dateStr, instance) {
+            document.location.search = '?{{
+                {
+                    cals: cals|join(' '),
+                    mode: mode
+                }
+                |url_encode()
+                |replace({"%20": "+"})
+                |raw
+            }}&date=' + dateStr;
+        }
+    });
+
+    setTimeout(function() {
+        location.reload(true)
+    }, 5 * 60 * 1000);
+});
+</script>
+{% endblock %}

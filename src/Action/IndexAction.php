@@ -26,19 +26,19 @@ class IndexAction extends AbstractAction
      * Extended PDO connection to a database.
      * @var ExtendedPdoInterface
      */
-    private $pdo;
+    protected $pdo;
 
     /**
      * SQL query factory.
      * @var QueryFactory
      */
-    private $query;
+    protected $query;
 
     /**
      * The prefix for tables within the database.
      * @var string
      */
-    private $prefix;
+    protected $prefix;
 
     /**
      * Construct the action with objects and configuration.
@@ -110,7 +110,7 @@ class IndexAction extends AbstractAction
      *
      * @SuppressWarnings(PHPMD.ElseExpression)
      */
-    private function fetchCalendars(&$args)
+    protected function fetchCalendars(&$args)
     {
         // Select a list of all calendars from the database.
         $select = $this->query->newSelect()
@@ -132,7 +132,7 @@ class IndexAction extends AbstractAction
                 ->where('id in (:cals)')
                 ->bindValue('cals', $args['cals']);
         } else {
-            $select->where('preset = true');
+            $this->fetchCalendarsDefault($select);
         }
 
         $args['calendars'] = $this->pdo->fetchAssoc(
@@ -141,11 +141,16 @@ class IndexAction extends AbstractAction
         );
     }
 
+    protected function fetchCalendarsDefault(&$select)
+    {
+        $select->where('preset = true');
+    }
+
     /**
      * Fetches information about blocks into the arguments.
      * @param array $args Arguments for a request.
      */
-    private function fetchBlocks(&$args)
+    protected function fetchBlocks(&$args)
     {
         $start = new \DateTimeImmutable($args['date']);
         $end = $start->setTime(23, 59, 59);
@@ -160,6 +165,7 @@ class IndexAction extends AbstractAction
                 'dtend'
             ])
             ->from($this->prefix . 'events')
+            ->where('transp != "TRANSPARENT"')
             ->where('dtstart < :end')
             ->where('dtend > :start ')
             ->bindValue('start', $start->format('Y-m-d H:i:s'))
@@ -178,10 +184,6 @@ class IndexAction extends AbstractAction
         );
 
         foreach ($events as $event) {
-            if ($event['transp'] === 'TRANSPARENT') {
-                continue;
-            }
-
             $dtstart = new \DateTime($event['dtstart']);
             $dtend = new \DateTime($event['dtend']);
 

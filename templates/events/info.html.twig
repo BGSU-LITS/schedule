@@ -1,0 +1,72 @@
+{% set iframe = mode == 'iframe' %}
+
+{% if not iframe %}
+    {% set title = 'Events Information' %}
+{% endif %}
+
+{% extends [settings.template.page, 'page.html.twig'] %}
+
+{% block content %}
+{{ parent() }}
+
+{% if not iframe %}
+<nav aria-label="breadcrumb">
+    <ol class="list-breadcrumb">
+        <li>
+            <a href="{{ path_for('index') }}">{{ settings.template.site }}</a>
+        </li><li>
+            <a href="{{ path_for('events') }}">Events</a>
+        </li><li aria-current="page">
+            {{ title }}
+        </li>
+    </ol>
+</nav>
+{% endif %}
+
+{% if calendars %}
+<h2>Included Calendars</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Room</th>
+            <th>Floor</th>
+        </tr>
+    </thead>
+    <tbody>
+{% for calendar in calendars %}
+        <tr>
+            <td>{{ calendar.title|split(' (', 2)[0] }}</td>
+            <td>{{ calendar.location }}</td>
+        </tr>
+{% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+<h2>Privacy</h2>
+<p>Publicly bookable rooms display first name and last initial only for patron privacy.</p>
+
+<h2>Navigation</h2>
+{% include 'includes/nav-page.html.twig' with {'now': true, 'path': path_for('events')} %}
+<ul>
+    <li>Today displays all events scheduled for the current day.</li>
+    <li>This Hour displays only current and upcoming events for today.</li>
+</ul>
+{% endblock %}
+
+{% block styles %}
+<style>
+#content .nav-page {
+    display: inline-block;
+}
+
+#content .table {
+    margin-bottom: 20px;
+}
+</style>
+{% endblock %}
+
+{% block scripts %}
+{{ parent() }}
+<script src="https://lib.bgsu.edu/template/1.0.0/flatpickr.js"></script>
+{% endblock %}

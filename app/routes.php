@@ -30,6 +30,32 @@ $container[IndexAction::class] = function (Container $container) {
 
 $app->get('/', IndexAction::class)->setName('index');
 
+$container[DisplayAction::class] = function (Container $container) {
+    return new DisplayAction(
+        $container[Messages::class],
+        $container[Session::class],
+        $container[Twig::class],
+        $container[ExtendedPdoInterface::class],
+        $container[QueryFactory::class],
+        $container['settings']['db']['prefix']
+    );
+};
+
+$app->get('/display', DisplayAction::class)->setName('display');
+
+$container[EventsAction::class] = function (Container $container) {
+    return new EventsAction(
+        $container[Messages::class],
+        $container[Session::class],
+        $container[Twig::class],
+        $container[ExtendedPdoInterface::class],
+        $container[QueryFactory::class],
+        $container['settings']['db']['prefix']
+    );
+};
+
+$app->get('/events[/{page}]', EventsAction::class)->setName('events');
+
 $container[ChangeAction::class] = function (Container $container) {
     return new ChangeAction(
         $container[Messages::class],

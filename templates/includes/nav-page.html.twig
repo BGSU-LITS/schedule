@@ -1,6 +1,6 @@
 <nav class="nav-page" aria-label="date navigation">
     <div>
-        <a class="nav-page-previous" href="?{{
+        <a class="nav-page-previous" href="{{ path }}?{{
             {
                 cals: cals|join(' '),
                 mode: mode,
@@ -9,7 +9,7 @@
             |url_encode()
             |replace({"%20": "+"})
         }}">Previous</a>
-        <a href="?{{
+        <a href="{{ path }}?{{
             {
                 cals: cals|join(' '),
                 mode: mode,
@@ -18,7 +18,18 @@
             |url_encode
             |replace({"%20": "+"})
         }}">Today</a>
-        <a class="nav-page-next" href="?{{
+        {% if now %}
+        <a href="{{ path }}?{{
+            {
+                cals: cals|join(' '),
+                mode: mode,
+                date: 'now'
+            }
+            |url_encode
+            |replace({"%20": "+"})
+        }}">This Hour</a>
+        {% endif %}
+        <a class="nav-page-next" href="{{ path }}?{{
             {
                 cals: cals|join(' '),
                 mode: mode,
@@ -27,11 +38,13 @@
             |url_encode()
             |replace({"%20": "+"})
         }}">Next</a>
+        {% if not path %}
         <a><button class="jump">Jump to Date</button></a>
+        {% endif %}
     </div>
     {% if staff %}
     <div>
-        <a href="?{{
+        <a href="{{ path }}?{{
             {
                 cals: cals|join(' '),
                 mode: mode == 'full' ? 'slim' : 'full',

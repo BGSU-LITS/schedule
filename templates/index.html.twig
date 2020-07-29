@@ -1,8 +1,25 @@
 {% set iframe = mode == 'iframe' %}
+
+{% if not iframe %}
+    {% set title = 'Room, Equipment and Reservation Schedule' %}
+{% endif %}
+
 {% extends [settings.template.page, 'page.html.twig'] %}
 
 {% block content %}
 {{ parent() }}
+
+{% if not iframe %}
+<nav aria-label="breadcrumb">
+    <ol class="list-breadcrumb">
+        <li>
+            <a href="{{ path_for('index') }}">{{ settings.template.site }}</a>
+        </li><li aria-current="page">
+            {{ title }}
+        </li>
+    </ol>
+</nav>
+{% endif %}
 
 <h2>Schedule for {{ date|date('D, M j, Y')|replace({' ': '&nbsp;'})|raw }}</h2>
 {% include 'includes/nav-page.html.twig' %}
@@ -171,7 +188,7 @@
     padding: 4px;
     position: absolute;
     top: 4px;
-    min-width: 138px;
+    min-width: 140px;
 }
 
 {% if mode != 'full' %}
