@@ -71,14 +71,11 @@
                 <div class="events">
                     {% for event in blocks[calendar.id]["%02d:%02d"|format(hour, half)] %}
                     <div>
-                        {% if staff %}
-                            <strong>{{ event.summary }}</strong><br>
-                        {% endif %}
-                        <em>{{ event.dtspan }}</em>
-                        {% if staff %}
-                            <br>{{ event.description|nl2br }}
-                        {% elseif calendar.person and event.person  %}
-                            <br>{{ event.person }}
+                        <strong>{{ event.dtspan }}</strong><br>
+                        {% if not staff and calendar.person %}
+                            {{ event.person }}
+                        {% else %}
+                            {{ event.summary }}
                         {% endif %}
                     </div>
                     {% endfor %}
@@ -171,6 +168,10 @@
 
 #times td.blocked > .events {
     display: none;
+}
+
+#times td.blocked > .events > div > strong {
+    white-space: nowrap;
 }
 
 #times td.blocked > .summary + .summary,

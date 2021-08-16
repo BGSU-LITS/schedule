@@ -4,7 +4,8 @@
             {
                 cals: cals|join(' '),
                 mode: mode,
-                date: date|date_modify('-1 day')|date('Y-m-d')
+                date: date|date_modify('-1 day')|date('Y-m-d'),
+                staff: staff
             }
             |url_encode()
             |replace({"%20": "+"})
@@ -13,7 +14,8 @@
             {
                 cals: cals|join(' '),
                 mode: mode,
-                date: 'today'
+                date: 'today',
+                staff: staff
             }
             |url_encode
             |replace({"%20": "+"})
@@ -23,7 +25,8 @@
             {
                 cals: cals|join(' '),
                 mode: mode,
-                date: 'now'
+                date: 'now',
+                staff: staff
             }
             |url_encode
             |replace({"%20": "+"})
@@ -33,7 +36,8 @@
             {
                 cals: cals|join(' '),
                 mode: mode,
-                date: date|date_modify('+1 day')|date('Y-m-d')
+                date: date|date_modify('+1 day')|date('Y-m-d'),
+                staff: staff
             }
             |url_encode()
             |replace({"%20": "+"})
@@ -42,17 +46,4 @@
         <a><button class="jump">Jump to Date</button></a>
         {% endif %}
     </div>
-    {% if staff %}
-    <div>
-        <a href="{{ path }}?{{
-            {
-                cals: cals|join(' '),
-                mode: mode == 'full' ? 'slim' : 'full',
-                date: date|date('Y-m-d')
-            }
-            |url_encode
-            |replace({"%20": "+"})
-        }}">Switch to {{ mode == 'full' ? 'slim' : 'full' }} mode</a>
-    </div>
-    {% endif %}
 </nav>

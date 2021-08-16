@@ -55,6 +55,7 @@ class EventsAction extends IndexAction
 
         $args['date'] = $req->getParam('date', 'now');
         $args['mode'] = $req->getParam('mode', 'slim');
+        $args['staff'] = $req->getParam('staff');
 
         if (isset($args['page']) && $args['page'] === 'info') {
             return $this->view->render($res, 'events/info.html.twig', $args);

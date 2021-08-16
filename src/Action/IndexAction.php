@@ -79,6 +79,7 @@ class IndexAction extends AbstractAction
         $args['cals'] = $req->getParam('cals');
         $args['date'] = $req->getParam('date', 'today');
         $args['mode'] = $req->getParam('mode', 'slim');
+        $args['staff'] = $req->getParam('staff');
 
         if (!empty($args['cals'])) {
             if (is_array($args['cals'])) {
@@ -205,6 +206,16 @@ class IndexAction extends AbstractAction
             if (preg_match($preg, $event['summary'], $matches)) {
                 if ($matches[2] !== 'Exchange Booking') {
                     $event['person'] = $matches[2];
+
+                    list($firstName, $lastName) = preg_split(
+                        '/\s+/',
+                        $event['person']
+                    );
+
+                    if ($firstName && $lastName) {
+                        $event['person'] = $firstName . ' ' .
+                            substr($lastName, 0, 1) . '.';
+                    }
                 }
             }
 

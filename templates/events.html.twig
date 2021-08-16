@@ -46,7 +46,7 @@
             <td>{{ calendars[event.calendar_id].location }}</td>
             <td>{{ event.dtstart|date('g:i A') }}</td>
             <td>{{ event.dtend|date('g:i A') }}</td>
-            <td>{{ event.person ?: event.summary }}</td>
+            <td>{{ not staff and calendars[event.calendar_id].person ? event.person : event.summary }}</td>
         </tr>
     {% endfor %}
     </tbody>
