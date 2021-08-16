@@ -30,6 +30,19 @@ $container[IndexAction::class] = function (Container $container) {
 
 $app->get('/', IndexAction::class)->setName('index');
 
+$container[BookingsAction::class] = function (Container $container) {
+    return new BookingsAction(
+        $container[Messages::class],
+        $container[Session::class],
+        $container[Twig::class],
+        $container[ExtendedPdoInterface::class],
+        $container[QueryFactory::class],
+        $container['settings']['db']['prefix']
+    );
+};
+
+$app->get('/bookings', BookingsAction::class)->setName('bookings');
+
 $container[DisplayAction::class] = function (Container $container) {
     return new DisplayAction(
         $container[Messages::class],

@@ -1,0 +1,156 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{ date|date('l, F j, Y') }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background: #fff;
+            color: #000;
+            font: 14px/1.42857143 "Helvetica Neue", Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0 15px;
+        }
+
+        article {
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+
+        header {
+            background: #ccc;
+            border: 1px solid #000;
+            margin: 20px 0;
+            text-align: center;
+            padding: 15px;
+        }
+
+        header div {
+            font-size: 32px;
+            font-weight: bold;
+            line-height: 1.25;
+            margin: 0;
+            padding: 0;
+        }
+
+        header div + div {
+            font-size: 24px;
+        }
+
+        main {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+            padding: 0;
+        }
+
+        table {
+            border-collapse: collapse;
+            margin: 0;
+            width: calc(50% - 15px);
+        }
+
+        table th {
+            background: #ff9900;
+            border: 1px solid #000;
+            font-size: 32px;
+            font-weight: bold;
+            line-height: 1.25;
+            margin: 0;
+            padding: 0 8px;
+            text-align: right;
+            vertical-align: middle;
+            width: 25%;
+            white-space: nowrap;
+        }
+
+        table td {
+            border: 1px solid #000;
+            margin: 0;
+            padding: 0 8px;
+            text-align: center;
+            vertical-align: middle;
+            width: 75%;
+        }
+
+        table td div {
+            display: inline-block;
+            margin-right: 20px;
+        }
+
+        table td div:last-child {
+            margin-right: 0;
+        }
+
+        footer {
+            font-size: 16px;
+            line-height: 1.4;
+            margin: 20px 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        footer div:last-child {
+            margin: 20px 0;
+        }
+
+        footer img {
+            height: 50px;
+            width: auto;
+        }
+
+        footer strong {
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+{% for calendar in calendars %}
+<article>
+    <header>
+        <div>{{ calendar.location }} {{ calendar.title }}</div>
+        <div>{{ date|date('l, F j, Y') }}</div>
+    </header>
+    <main>
+        <table>
+            {% for slot, events in calendar.slots %}
+                <tr>
+                    <th>{{ slot }}</th>
+                    <td>
+                        {% for event in events %}
+                            <div>
+                                {{ event.person }}
+                                {% if event.size %}
+                                    ({{ event.size }})
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </td>
+                </tr>
+                {% if loop.index == loop.length // 2 %}
+                    </table>
+                    <table>
+                {% endif %}
+            {% endfor %}
+        </table>
+    </main>
+    <footer>
+        <div>
+            If you don’t have a reservation, please add your name to the sign-up
+            sheet (maximum 3 hours).
+        </div>
+        {% if calendar.link %}
+            <div>
+                If you want to reserve a room for a future date, sign up online at:
+                <strong>{{ calendar.link }}</strong>
+            </div>
+        {% endif %}
+        <div>
+            <img src="https://lib.bgsu.edu/assets/img/ul.svg">
+        </div>
+    </footer>
+</article>
+{% endfor %}
+</body>
+</html>

@@ -1,0 +1,130 @@
+{% set title = "Bookings" %}
+{% extends [settings.template.page, 'page.html.twig'] %}
+
+{% block content %}
+{{ parent() }}
+
+<form method="get" action="{{ path_for('bookings') }}">
+    <div>
+        <label for="date">Date</label>
+        {{
+            helper.input({
+                type: 'date',
+                name: 'date',
+                attribs: {
+                    id: 'date'
+                }
+            })
+            |raw
+        }}
+    </div>
+    <div>
+        <label for="start">Start Time</label>
+        {{
+            helper.input({
+                type: 'time',
+                name: 'start',
+                value: '08:00:00',
+                attribs: {
+                    id: 'start'
+                }
+            })
+            |raw
+        }}
+    </div>
+    <div>
+        <label for="end">End Time</label>
+        {{
+            helper.input({
+                type: 'time',
+                name: 'end',
+                value: '00:00:00',
+                attribs: {
+                    id: 'end'
+                }
+            })
+            |raw
+        }}
+    </div>
+    <div>
+        <label for="step">Slot Length</label>
+        {{
+            helper.input({
+                type: 'select',
+                name: 'step',
+                attribs: {
+                    id: 'step'
+                },
+                options: {
+                    '30': '30 minutes',
+                    '60': '1 hour',
+                    '120': '2 hours'
+                }
+            })
+            |raw
+        }}
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Room or Equipment</th>
+                <th class="text-right">Location</th>
+                <th>Book</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for calendar in calendars %}
+            <tr>
+                <td>
+                    {{
+                        helper.input({
+                            type: 'checkbox',
+                            name: 'cals[]',
+                            value: calendar.location and calendar.link and calendar.id,
+                            attribs: {
+                                'label': calendar.title,
+                                'value': calendar.id,
+                            }
+                        })
+                        |raw
+                    }}
+                </td>
+                <td class="text-right">{{ calendar.location }}</td>
+                <td>
+                    {% if calendar.link %}
+                    <a href="{{ calendar.link }}" title="Book {{ calendar.title }}">Book</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <button type="submit">Print Bookings</button>
+</form>
+
+{% endblock %}
+
+{% block styles %}
+{{ parent() }}
+<style>
+form > div {
+    float: left;
+    margin: 0 20px 20px 0;
+}
+
+form > div > label {
+    display: block;
+    font-weight: bold;
+}
+
+form > div > input,
+form > div > select {
+    font: inherit;
+    height: 2em;
+}
+
+form  > table {
+    clear: left;
+}
+</style>
+{% endblock %}
