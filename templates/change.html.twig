@@ -10,8 +10,7 @@
             <tr>
                 <th>Room or Equipment</th>
                 <th class="text-right">Location</th>
-                <th>Request</th>
-                <th>ICS</th>
+                <th>Book</th>
             </tr>
         </thead>
         <tbody>
@@ -34,10 +33,9 @@
                 <td class="text-right">{{ calendar.location }}</td>
                 <td>
                     {% if calendar.link %}
-                    <a href="{{ calendar.link }}" title="Request {{ calendar.title }}">Request</a>
+                    <a href="{{ calendar.link }}" title="Book {{ calendar.title }}">Book</a>
                     {% endif %}
                 </td>
-                <td><a href="{{ calendar.ical }}" title="ICS for {{ calendar.title }}">ICS</a></td>
             </tr>
         {% endfor %}
         </tbody>
