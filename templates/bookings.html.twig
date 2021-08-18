@@ -120,9 +120,13 @@
                     <td>
                         {% for event in events %}
                             <div>
-                                {{ event.person }}
-                                {% if event.size %}
-                                    ({{ event.size }})
+                                {% if event.person %}
+                                    {{ event.person }}
+                                    {% if event.size %}
+                                        ({{ event.size }})
+                                    {% endif %}
+                                {% else %}
+                                    {{ event.summary }}
                                 {% endif %}
                             </div>
                         {% endfor %}
