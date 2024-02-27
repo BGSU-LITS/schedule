@@ -1,0 +1,26 @@
+<nav aria-label="pagination" class="bgsu_common_pagination bgsu_common__screen">
+    <div class="bgsu_common_pagination_buttons">
+        <a class="bgsu_common_button bgsu_common_button__small bgsu_common__arrow_previous" href="?{{ {date: date|date_modify('-1 day')|date('Y-m-d')}|url_encode() }}{% if iframe %}&amp;iframe{% endif %}">Previous</a>
+        <a class="bgsu_common_button bgsu_common_button__small" href="?date=today{% if iframe %}&amp;iframe{% endif %}">Today</a>
+{% if now %}
+        <a class="bgsu_common_button bgsu_common_button__small" href="?date=now{% if iframe %}&amp;iframe{% endif %}">This&nbsp;Hour</a>
+{% endif %}
+        <a class="bgsu_common_button bgsu_common_button__small bgsu_common__arrow_next" href="?{{ {date: date|date_modify('+1 day')|date('Y-m-d')}|url_encode() }}{% if iframe %}&amp;iframe{% endif %}">Next</a>
+    </div>
+    <div class="bgsu_common_pagination_current"></div>
+    <div class="bgsu_common_pagination_date">
+        <input type="text" id="date" name="date" value="">
+        <label for="date" class="bgsu_common_button bgsu_common_button__small">Select Date</label>
+    </div>
+</nav>
+
+<script src="/template/2.0.0-b15/flatpickr.js"></script>
+<script>
+(function (field) {
+    bgsu_flatpickr.setup(field, {
+        onChange: (selectedDates, dateString, instance) => {
+            window.location = `?date=${dateString}{% if iframe %}&iframe{% endif %}`;
+        },
+    });
+}(document.getElementById('date')));
+</script>

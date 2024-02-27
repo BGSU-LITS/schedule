@@ -1,0 +1,165 @@
+{% set title = 'Reservations for ' ~ date|date('D, M j, Y') %}
+{% extends 'page.html.twig' %}
+
+{% block styles %}
+{{ parent() }}
+
+{% if calendars and blocks %}
+<style>
+#overflow {
+    overflow-x: auto;
+}
+
+#times {
+    line-height: 1;
+    min-width: {{ (calendars|length * 2.5) + 7.25 }}rem;
+    table-layout: fixed;
+    width: 100%;
+}
+
+#times th {
+    text-align: center;
+    width: 6rem;
+}
+
+#times thead,
+#times tbody {
+    display: block;
+}
+
+#times thead th {
+    border: none;
+}
+
+#times thead th:has(.bgsu_common__rotate) {
+    line-height: 1.25;
+    text-align: left;
+    width: 2.5rem;
+}
+
+#times tbody {
+    border-bottom: 2px solid black;
+    height: calc(20 * 1.25rem + 5px);
+    overflow-y: scroll;
+    padding-bottom: calc(18 * 1.25rem);
+}
+
+#times tbody th {
+    padding-top: 0;
+    vertical-align: top;
+}
+
+#times tbody td {
+    height: 1.25rem;
+    width: 2.5rem;
+}
+
+#times .blocked {
+    background: #7f3f2f;
+}
+
+#times .blocked:hover {
+    background: #4f2c1d;
+}
+
+.blocked_events {
+    font-size: 0.875rem;
+}
+
+.blocked_events div + div {
+    border-top: 1px solid #dee2e6;
+    margin-top: 0.25rem;
+    padding-top: 0.25rem;
+}
+</style>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+{{ parent() }}
+
+<script src="/template/2.0.0-b15/tippy.js"></script>
+<script>
+bgsu_tippy.setupChild('.blocked', {
+    offset: [-6, 3],
+    placement: 'right-start',
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+{% if date|date('Y-m-d') == 'today'|date('Y-m-d') %}
+    const date = new Date();
+    const time = document.getElementById(
+        'time' + ('0' + date.getHours()).slice(-2) +
+        (date.getMinutes() < 30 ? '00' : '30')
+    );
+{% else %}
+    const time = document.getElementById('time0800');
+{% endif %}
+    const tbody = document.querySelector('#times tbody');
+
+    tbody.scrollTop = time.offsetTop - tbody.offsetTop - 3;
+    setTimeout(() => location.reload(true), 5 * 60 * 1000);
+});
+</script>
+{% endblock %}
+
+{% block content %}
+<h1>Reservations for {{ date|date('D, M j, Y')|replace({' ': '&nbsp;'})|raw }}</h1>
+
+{% include 'pagination.html.twig' %}
+
+<div id="overflow">
+    <table id="times" class="bgsu_common_table bgsu_common_table__bordered">
+        <thead>
+            <tr>
+                <th>Time</th>
+{% for calendar in calendars %}
+                <th>
+                    <div class="bgsu_common__rotate">
+{% if calendar.link %}
+                        <a href="{{ calendar.link }}" target="_top">
+                            {{ calendar.name }}
+                        </a>
+{% else %}
+                        {{ calendar.name }}
+{% endif %}
+                        <div class="bgsu_common__muted bgsu_common__small">
+                            {{ (calendar.info ? calendar.info|replace({'-': '&#8209;'}) : '&nbsp;')|raw }}
+                        </div>
+                    </div>
+                </th>
+{% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+{% for hour in 0..23 %}
+{% for half in [0, 30] %}
+            <tr id="time{{ "%02d%02d"|format(hour, half) }}">
+{% if half == 0 %}
+                <th rowspan="2" class="bgsu_common__figure bgsu_common__nowrap">
+                    {{ hour % 12 == 0 ? 12 : hour % 12 }}:00 {{ hour < 12 ? 'AM' : 'PM'}}
+                </th>
+{% endif %}
+{% for calendar in calendars %}
+                <td{% if blocks[calendar.id]["%02d:%02d"|format(hour, half)] %} class="blocked"{% endif %}>
+                    <div class="blocked_events">
+{% for event in blocks[calendar.id]["%02d:%02d"|format(hour, half)] %}
+                        <div>
+                            {{ event.dtspan }}<br>
+                            <strong>{{ event.person ?: event.summary ?: 'Reserved' }}</strong>
+                        </div>
+{% endfor %}
+                    </div>
+                </td>
+{% endfor %}
+            </tr>
+{% endfor %}
+{% endfor %}
+        </tbody>
+    </table>
+</div>
+{% include 'pagination.html.twig' %}
+
+<p>Schedule refreshes every five minutes.</p>
+
+{% endblock %}

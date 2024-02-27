@@ -1,0 +1,66 @@
+{% set title = 'Bookings' %}
+{% extends 'page.html.twig' %}
+
+{% block content %}
+{{ parent() }}
+
+<form method="post" action="{{ url_for('bookings') }}" class="bgsu_common_form">
+    <div class="bgsu_common__flex bgsu_common__gap bgsu_common__narrow">
+        <div>
+            <label for="date">Date</label>
+            <div><input name="date" id="date" type="date"></div>
+        </div>
+        <div>
+            <label for="start">Start Time</label>
+            <div><input name="start" id="start" type="time" value="08:00:00"></div>
+        </div>
+        <div>
+            <label for="end">End Time</label>
+            <div><input name="end" id="end" type="time" value="00:00:00"></div>
+        </div>
+        <div>
+            <label for="step">Slot Length</label>
+            <div>
+                <select id="step" name="step">
+                    <option value="30">30 minutes</option>
+                    <option value="60">1 hour</option>
+                    <option value="120">2 hours</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <p><button type="submit" class="bgsu_common_button bgsu_common_button__arrow bgsu_common_button__primary">Print Bookings</button></p>
+
+    <table class="bgsu_common_table">
+        <thead>
+            <tr>
+                <th>Space or Equipment</th>
+                <th>Area</th>
+                <th>Orientation</th>
+                <th>Book</th>
+            </tr>
+        </thead>
+        <tbody>
+{% for calendar in calendars %}
+            <tr>
+                <td>
+                    <label title="Print {{ calendar.name }}">
+                        <input type="checkbox" name="calendars[]" value="{{ calendar.id }}"{% if calendar.bookings %} checked{% endif %}>
+                        {{ calendar.name }}
+                    </label>
+                </td>
+                <td>{{ calendar.area }}</td>
+                <td>
+                    <label title="Print Landscape {{ calendar.name }}">
+                        <input type="checkbox" name="landscape[]" value="{{ calendar.id }}"{% if calendar.landscape %} checked{% endif %}>
+                        Landscape
+                    </label>
+                </td>
+                <td>{% if calendar.link != '' %}<a href="{{ calendar.link }}" title="Book {{ calendar.name }}">Book</a>{% endif %}</td>
+            </tr>
+{% endfor %}
+        </tbody>
+    </table>
+</form>
+
+{% endblock %}

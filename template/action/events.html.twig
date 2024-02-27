@@ -1,0 +1,71 @@
+{% set title = 'Current and Upcoming Events for ' ~ date|date('D, M j, Y') %}
+{% extends 'page.html.twig' %}
+
+{% block scripts %}
+{{ parent() }}
+
+<script>setTimeout(() => location.reload(true), 5 * 60 * 1000);</script>
+{% endblock %}
+
+{% block content %}
+<h1>Reservations for {{ date|date('D, M j, Y')|replace({' ': '&nbsp;'})|raw }}</h1>
+
+{% set now = true %}
+{% include 'pagination.html.twig' %}
+
+<table class="bgsu_common_table {% if iframe %}bgsu_common_table__small{% endif %}">
+    <thead>
+        <tr>
+            <th>Room</th>
+            <th>Floor</th>
+            <th>Start</th>
+            <th>End</th>
+            <th>Event</th>
+        </tr>
+    </thead>
+    <tbody class="bgsu_common__nowrap">
+{% for event in events %}
+        <tr>
+            <td>{{ calendars[event.calendar_id].name }}</td>
+            <td>{{ calendars[event.calendar_id].area }}</td>
+            <td class="bgsu_common__figure">{{ event.dtstart|date('g:i A') }}</td>
+            <td class="bgsu_common__figure">{{ event.dtend|date('g:i A') }}</td>
+            <td class="bgsu_common__full">{{ event.person(false, true) ?: event.summary ?: 'Reserved' }}</td>
+        </tr>
+{% endfor %}
+    </tbody>
+</table>
+
+{% include 'pagination.html.twig' %}
+
+<p>Schedule refreshes every five minutes.</p>
+
+<h2>Included Calendars</h2>
+<table class="bgsu_common_table {% if iframe %}bgsu_common_table__small{% endif %}">
+    <thead>
+        <tr>
+            <th>Room</th>
+            <th>Floor</th>
+            <th>Contact</th>
+        </tr>
+    </thead>
+    <tbody class="bgsu_common__nowrap">
+{% for calendar in calendars %}
+        <tr>
+            <td>
+{% if calendar.link %}
+                <a href="{{ calendar.link }}" target="_top">
+                    {{ calendar.name }}
+                </a>
+{% else %}
+                {{ calendar.name }}
+{% endif %}
+            </td>
+            <td>{{ calendar.area }}</td>
+            <td class="bgsu_common__full">{{ calendar.info }}</td>
+        </tr>
+{% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

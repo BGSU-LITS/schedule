@@ -1,0 +1,11 @@
+{% set title = 'Access Denied' %}
+{% extends 'page.html.twig' %}
+
+{% block content %}
+{{ parent() }}
+
+<p>This resource is only available from certain networks or by logging in.</p>
+
+<p><a id="login" href="{{ settings.auth.urlLogin(parent ?: current_url(true)) }}" class="bgsu_common_button">Log In</a></p>
+
+{% endblock %}

@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>{{ date|date('l, F j, Y') }}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+@page {
+    margin: 0;
+}
+
+@page portrait {
+    size: letter portrait;
+}
+
+@page landscape {
+    size: letter landscape;
+}
+
+html {
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    background: #fff;
+    color: #000;
+    font: 12pt/1.25 "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+article {
+    break-after: page;
+    display: flex;
+    flex-direction: column;
+    height: 11in;
+    overflow: hidden;
+    padding: 0.7in 0.6in;
+    page: portrait;
+    width: 8.5in;
+}
+
+article.landscape {
+    height: 8.5in;
+    padding: 0.5in 0.6in;
+    page: landscape;
+    width: 11in;
+}
+
+header {
+    background: #ccc;
+    border: 1px solid #000;
+    padding: 0.5rem;
+    text-align: center;
+}
+
+header h1, header h2 {
+    margin: 0;
+    padding: 0;
+}
+
+header h1 {
+    font-size: 20pt;
+}
+
+header h2 {
+    font-size: 16pt;
+}
+
+main {
+    columns: 2;
+    margin: 1rem 0;
+}
+
+article.landscape main {
+    columns: 3;
+}
+
+main section {
+    align-items: stretch;
+    display: flex;
+}
+
+main section > * {
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    outline: 1px solid black;
+    flex: 1 1 auto;
+    font-size: 11pt;
+    margin: 0;
+    padding: 0 0.25rem;
+    text-align: center;
+    word-break: break-word;
+}
+
+main section > h3 {
+    background: #ff9900;
+    flex: 0 0 6.5rem;
+    font-size: 16pt;
+    font-weight: bold;
+    line-height: 30pt;
+    text-align: right;
+}
+
+footer {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+}
+
+footer img {
+    height: 0.75in;
+    width: auto;
+}
+
+footer strong {
+    white-space: nowrap;
+}
+</style>
+</head>
+<body>
+{% for calendar in calendars %}
+<article{% if calendar.id in landscape %} class="landscape"{% endif %}>
+    <header>
+        <h1>{{ calendar.area }} {{ calendar.name }}</h1>
+        <h2>{{ date|date('l, F j, Y') }}</h2>
+    </header>
+    <main>
+{% for time, events in calendar.slots(date, start, end, step) %}
+        <section>
+            <h3>{{ time }}</h3>
+            <div>
+{% for event in events %}
+                <div>
+                    {{ event.person(calendar.public) ?: event.summary ?: 'Reserved' }}
+{% if event.size %}
+                    ({{ event.size }})
+{% endif %}
+                </div>
+{% endfor %}
+            </div>
+        </section>
+{% endfor %}
+    </main>
+    <footer>
+        <div>
+            If you don’t have a reservation, please add your name to the sign-up
+            sheet (maximum 3 hours).
+        </div>
+        {% if calendar.link and calendar.public %}
+            <div>
+                If you want to reserve a room for a future date, sign up online at:
+                <strong>{{ calendar.link }}</strong>
+            </div>
+        {% endif %}
+        <div>
+            <img src="/logo/ul-black.svg">
+        </div>
+    </footer>
+</article>
+{% endfor %}
+</body>
+</html>
