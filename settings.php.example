@@ -73,4 +73,55 @@ return function (Framework $framework): void {
     // Directory which contains migration files for the database.
     $settings['database']->migration = __DIR__ . DIRECTORY_SEPARATOR .
         'src' . DIRECTORY_SEPARATOR . 'Migration';
+
+    assert($settings['auth'] instanceof AuthConfig);
+
+    // Set the context of this application for specific roles.
+    $settings['auth']->context = 'schedule';
+
+    // Specify the connection details for the auth database.
+    $database = new DatabaseConfig();
+    $database->type = 'mysql';
+    $database->host = 'localhost';
+    // $database->port = 3306;
+    $database->username = 'auth';
+    $database->password = 'password';
+    $database->name = 'auth';
+    // $settings['auth']->database->prefix = 'auth_';
+    $settings['auth']->database = $database;
+
+    // Must be a string or null. If null, no auth is required by default.
+    // If 'true' auth is required for all routes. If 'false' auth is disallowed
+    // for all routes. If string, the user must have that role for all routes.
+    $settings['auth']->required = null;
+
+    // Relative path to User Management for this server.
+    $settings['auth']->url = '/user/';
+
+    assert($settings['schedule'] instanceof ScheduleConfig);
+
+    // Specify the starting datetime of events to retrieve, default now.
+    // $settings['schedule']->start = \DateTimeImmutable('now');
+
+    // Specify the ending datetime of events to retrieve, default six months.
+    // $settings['schedule']->end = \DateTimeImmutable('+6 months');
+
+    // Specify the assumed timezone of events, default is from PHP settings.
+    // $settings['schedule']->timezone =
+    //      new \DateTimeZone(\date_default_timezone_get());
+
+    // Specify IP addresses that can view pages in an iframe, as regular
+    // expression. Default allows no addresses. A constant is available to
+    // select local network addresses.
+    // $settings['schedule']->timezone =
+    //      '/' . ScheduleConfig::PATTERN_IP_LOCAL . '/';
+
+    // URL to a parent page that has the events page in an iframe.
+    // $settings['schedule']->parent_events = 'https://example.org';
+
+    // URL to a parent page that has the reservations page in an iframe.
+    // $settings['schedule']->parent_reservations = 'https://example.org';
+
+    // User agent to use when fetching events instead of default.
+    // $settings['schedule']->user_agent = 'Custom User Agent';
 };
