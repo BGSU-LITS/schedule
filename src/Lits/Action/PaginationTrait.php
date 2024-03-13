@@ -68,15 +68,12 @@ trait PaginationTrait
     {
         \assert($this->settings['schedule'] instanceof ScheduleConfig);
 
-        if (
-            \is_null($this->settings['schedule']->allow_ip) ||
-            !isset($_SERVER['REMOTE_ADDR'])
-        ) {
+        if (\is_null($this->settings['schedule']->allow_ip)) {
             return false;
         }
 
         $ip = \filter_var(
-            $_SERVER['REMOTE_ADDR'],
+            $this->findIp(),
             \FILTER_VALIDATE_IP,
             \FILTER_FLAG_IPV4,
         );
@@ -86,5 +83,18 @@ trait PaginationTrait
         }
 
         return preg_match($this->settings['schedule']->allow_ip, $ip) !== 0;
+    }
+
+    private function findIp(): ?string
+    {
+        if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            return $_SERVER['HTTP_X_FORWARDED_FOR'];
+        }
+
+        if (isset($_SERVER['REMOTE_ADDR'])) {
+            return $_SERVER['REMOTE_ADDR'];
+        }
+
+        return null;
     }
 }
