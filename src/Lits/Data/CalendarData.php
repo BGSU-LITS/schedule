@@ -26,6 +26,7 @@ final class CalendarData extends DatabaseData
     public bool $display;
     public bool $bookings;
     public bool $landscape;
+    public ?int $parent;
 
     /**
      * @param array<string, string|null> $row
@@ -55,6 +56,7 @@ final class CalendarData extends DatabaseData
         $calendar->display = self::findRowBool($row, 'display');
         $calendar->bookings = self::findRowBool($row, 'bookings');
         $calendar->landscape = self::findRowBool($row, 'landscape');
+        $calendar->parent = self::findRowInt($row, 'parent');
 
         return $calendar;
     }
@@ -152,6 +154,16 @@ final class CalendarData extends DatabaseData
                     $this->settings,
                     $this->database,
                 );
+
+                if (\is_int($this->parent)) {
+                    $result[$time] += EventData::withinTimespan(
+                        $this->parent,
+                        $current,
+                        $next,
+                        $this->settings,
+                        $this->database,
+                    );
+                }
 
                 $current = $next;
             }
